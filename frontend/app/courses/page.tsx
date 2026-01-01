@@ -329,6 +329,74 @@ const HSKCoursesPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">HSK Chinese Courses</h1>
+          <p className="text-xl text-blue-100 mb-6">
+            Master Mandarin Chinese from beginner to advanced with our comprehensive HSK courses
+          </p>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+              <BookOpen className="w-5 h-5" />
+              <span>6 Complete Courses</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+              <Users className="w-5 h-5" />
+              <span>4,310+ Students</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
+              <Star className="w-5 h-5 fill-yellow-300 text-yellow-300" />
+              <span>4.8 Average Rating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Таны сургалт Section */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border border-purple-500/30 mb-8">
+          <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+            <GraduationCap className="w-8 h-8 text-purple-400" />
+            Таны сургалт
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { level: "HSK 1", price: "350,000₮", color: "from-blue-500 to-blue-600" },
+              { level: "HSK 2", price: "400,000₮", color: "from-green-500 to-green-600" },
+              { level: "HSK 3", price: "450,000₮", color: "from-orange-500 to-orange-600" },
+              { level: "HSK 4", price: "500,000₮", color: "from-pink-500 to-pink-600" },
+              { level: "HSK 5", price: "550,000₮", color: "from-yellow-500 to-yellow-600" },
+              { level: "HSK 6", price: "600,000₮", color: "from-indigo-500 to-indigo-600" }
+            ].map((course, index) => (
+              <div 
+                key={index}
+                className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
+              >
+                <div className={`bg-gradient-to-r ${course.color} text-white text-center py-3 px-4 rounded-lg mb-4 font-bold text-lg`}>
+                  {course.level}
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-white mb-4">{course.price}</div>
+                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
+                    <div className="text-xs text-gray-400 mb-1">Эхлэх огноо:</div>
+                    <div className="text-sm text-white font-medium">2026.01.15</div>
+                  </div>
+                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
+                    <div className="text-xs text-gray-400 mb-1">Дуусах огноо:</div>
+                    <div className="text-sm text-white font-medium">2026.02.15</div>
+                  </div>
+                  <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors duration-300 font-medium flex items-center justify-center gap-2">
+                    <span>Бүртгүүлэх</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
