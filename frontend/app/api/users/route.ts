@@ -3,6 +3,14 @@ import fs from "fs";
 import path from "path";
 import bcrypt from "bcryptjs";
 
+import users from "../../../data/user.json";
+
+export async function GET() {
+  return NextResponse.json(users);
+}
+
+
+
 // Хэрэглэгчийн type тодорхойлно
 type User = {
   ner: string;
@@ -61,3 +69,5 @@ export async function GET() {
     return NextResponse.json([], { status: 500 });
   }
 }
+
+

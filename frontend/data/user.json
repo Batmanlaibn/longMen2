@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "ner": "bat",
+    "email": "bat@gmail.com",
+    "utas": "88717298",
+    "nas": 24,
+    "nuutsugs": "$2b$10$dRNJSWFQvuSkqnsDdm50ieX73YK6D2ITiPMsj5uLJCg.7mgOTbFWO",
+    "hskLevel": "HSK 2"
+  },
+  {
+    "ner": "bat",
+    "email": "bt@gmail.com",
+    "utas": "88717298",
+    "nas": 55,
+    "nuutsugs": "$2b$10$TTZkwmORA2AdwxGiKLMPk.ZLg4NRTSnn3Il0Wfvd5GlgNQnxX1DlO",
+    "hskLevel": "HSK 3"
+  },
+  {
+    "ner": "ADMIN",
+    "email": "ADMIN@GMAIL.COM",
+    "utas": "88717298",
+    "nas": 100,
+    "nuutsugs": "$2b$10$SRhh.3E57QgZf3gZQBBWuusqoVBVSukGqaVgJuqJ066P0qIGo3TK.",
+    "hskLevel": "HSK 4"
+  },
+  {
+    "compilerOptions": {
+      "resolveJsonModule": true,
+      "esModuleInterop": true
+    }
+  }
+]

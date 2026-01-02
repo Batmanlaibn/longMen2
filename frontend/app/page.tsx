@@ -10,7 +10,7 @@ export default function Home() {
     <div className="">
       <Header />
       <Cards />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
