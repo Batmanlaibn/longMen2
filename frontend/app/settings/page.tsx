@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { User, Bell, Globe, Lock, CreditCard, Shield, Moon, Sun, BookOpen, LogOut, Save, AlertCircle, CheckCircle } from 'lucide-react';
+import { User, Bell, Globe, Shield, Moon, Sun, BookOpen, LogOut, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import Header from '../components/header';
 
 interface UserSettings {
@@ -41,8 +41,6 @@ const HSKSettingsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-
-  // Form states
   const [formData, setFormData] = useState<Partial<UserSettings>>({});
 
   useEffect(() => {
@@ -60,7 +58,6 @@ const HSKSettingsPage: React.FC = () => {
 
       const { email } = JSON.parse(loggedInUser);
       
-      // Load user data from API
       const response = await fetch('/api/users');
       const users = await response.json();
       
@@ -70,26 +67,24 @@ const HSKSettingsPage: React.FC = () => {
         throw new Error('User not found');
       }
 
-      // Load saved settings from localStorage or use defaults
-      const savedSettings = localStorage.getItem(`settings_${email}`);
-      const settings: UserSettings = savedSettings ? JSON.parse(savedSettings) : {
+      const settings: UserSettings = {
         email: user.email,
         ner: user.ner,
         utas: user.utas,
         nas: user.nas,
         bio: user.bio || `HSK суралцагч, Хятад хэлийг сонирхдог`,
         avatar: user.avatar || '👨‍🎓',
-        darkMode: false,
-        emailNotifications: true,
-        pushNotifications: true,
-        soundEffects: true,
-        autoplay: false,
-        language: 'mn',
-        timezone: 'UTC+8',
-        twoFactor: false,
-        studyGoal: '30',
-        difficulty: 'Дунд',
-        notificationTypes: {
+        darkMode: user.darkMode ?? false,
+        emailNotifications: user.emailNotifications ?? true,
+        pushNotifications: user.pushNotifications ?? true,
+        soundEffects: user.soundEffects ?? true,
+        autoplay: user.autoplay ?? false,
+        language: user.language || 'mn',
+        timezone: user.timezone || 'UTC+8',
+        twoFactor: user.twoFactor ?? false,
+        studyGoal: user.studyGoal || '30',
+        difficulty: user.difficulty || 'Дунд',
+        notificationTypes: user.notificationTypes || {
           lessonReminders: true,
           newContent: true,
           progressReport: true,
@@ -113,16 +108,32 @@ const HSKSettingsPage: React.FC = () => {
     setSaveMessage(null);
 
     try {
-      // Save to localStorage
       const settingsToSave = { ...currentUser, ...formData };
-      localStorage.setItem(`settings_${currentUser.email}`, JSON.stringify(settingsToSave));
       
-      // Update current user state
+      // Save to backend API
+      const response = await fetch('/api/users/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: currentUser.email,
+          settings: settingsToSave
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save settings');
+      }
+
+      // Update local state
       setCurrentUser(settingsToSave);
+      
+      // Also save to localStorage as backup
+      localStorage.setItem(`settings_${currentUser.email}`, JSON.stringify(settingsToSave));
       
       setSaveMessage({ type: 'success', text: 'Тохиргоо амжилттай хадгалагдлаа!' });
       
-      // Clear message after 3 seconds
       setTimeout(() => setSaveMessage(null), 3000);
     } catch (err) {
       console.error('Error saving settings:', err);
@@ -528,7 +539,7 @@ const HSKSettingsPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <Header />
       <div className="max-w-6xl mx-auto">
         <div className="mb-6">
@@ -536,7 +547,6 @@ const HSKSettingsPage: React.FC = () => {
           <p className="text-gray-600">Та өөрийн бүртгэл болон тохиргоог энд удирдана</p>
         </div>
 
-        {/* Save Message */}
         {saveMessage && (
           <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
             saveMessage.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
@@ -551,7 +561,6 @@ const HSKSettingsPage: React.FC = () => {
         )}
 
         <div className="grid md:grid-cols-4 gap-6">
-          {/* Sidebar */}
           <div className="md:col-span-1">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
               {sections.map(section => (
@@ -582,7 +591,6 @@ const HSKSettingsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Main Content */}
           <div className="md:col-span-3">
             <div className="bg-white rounded-xl shadow-lg p-6">
               {renderContent()}
