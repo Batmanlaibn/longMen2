@@ -1,0 +1,485 @@
+{
+  "about": {
+    "introduction": {
+      "title": "Бидний тухай",
+      "paragraphs": [
+        "HSK Үг Сурах платформ нь хятад хэл сурагчдад зориулсан цогц сургалтын систем юм. Бид HSK 1-ээс 6 хүртэлх бүх түвшний үгсийг судлах, дасгал хийх боломжийг олгодог.",
+        "Манай зорилго бол хятад хэл сурахыг илүү хялбар, хүртээмжтэй, үр дүнтэй болгох явдал юм."
+      ]
+    },
+    "hskLevels": [
+      {
+        "level": 1,
+        "words": 150,
+        "color": "bg-green-100 border-green-300",
+        "textColor": "text-green-700",
+        "description": "Эхлэгч түвшин"
+      },
+      {
+        "level": 2,
+        "words": 300,
+        "color": "bg-blue-100 border-blue-300",
+        "textColor": "text-blue-700",
+        "description": "Анхан шатны түвшин"
+      },
+      {
+        "level": 3,
+        "words": 600,
+        "color": "bg-purple-100 border-purple-300",
+        "textColor": "text-purple-700",
+        "description": "Дунд түвшин"
+      },
+      {
+        "level": 4,
+        "words": 1200,
+        "color": "bg-orange-100 border-orange-300",
+        "textColor": "text-orange-700",
+        "description": "Дунд дээд түвшин"
+      },
+      {
+        "level": 5,
+        "words": 2500,
+        "color": "bg-red-100 border-red-300",
+        "textColor": "text-red-700",
+        "description": "Ахисан түвшин"
+      },
+      {
+        "level": 6,
+        "words": 5000,
+        "color": "bg-indigo-100 border-indigo-300",
+        "textColor": "text-indigo-700",
+        "description": "Мэргэшсэн түвшин"
+      }
+    ],
+    "features": [
+      {
+        "number": 1,
+        "title": "Интерактив сургалт",
+        "description": "Flashcard, дасгал, тоглоом ашиглан үг сурах"
+      },
+      {
+        "number": 2,
+        "title": "Дуу хоолойн дэмжлэг",
+        "description": "Бүх үгийн зөв дуудлагыг сонсох боломжтой"
+      },
+      {
+        "number": 3,
+        "title": "Явцын хяналт",
+        "description": "Өөрийн ахиц дэвшлийг хянах, статистик үзэх"
+      },
+      {
+        "number": 4,
+        "title": "Шалгалтын бэлтгэл",
+        "description": "HSK шалгалтад бэлтгэх төрөл бүрийн дасгал"
+      }
+    ],
+    "contact": {
+      "title": "Холбоо барих",
+      "description": "Асуулт, санал хүсэлт байвал бидэнтэй холбогдоорой!",
+      "email": "info@hsklearn.mn",
+      "phone": "+976 xxxx-xxxx",
+      "facebook": "@HSKLearnMongolia"
+    }
+  },
+  "courses": [
+    {
+      "id": 1,
+      "title": "HSK 1 Vocabulary Cards",
+      "shortTitle": "HSK 1",
+      "description": "150 essential Chinese characters",
+      "longDescription": "This course covers the most common 150 Chinese characters, basic pronunciation, and simple sentence structures for absolute beginners.",
+      "level": "Beginner",
+      "rating": 4.8,
+      "price": 29,
+      "duration": "4 weeks",
+      "lessons": 20,
+      "students": 1200,
+      "image": "bg-gradient-to-br from-blue-400 to-purple-500",
+      "icon": "📚",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Introduction to HSK 1",
+          "date": "May 29, 2025",
+          "comments": 240,
+          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4"
+        },
+        {
+          "id": 2,
+          "title": "Basic Characters",
+          "date": "Jun 5, 2025",
+          "comments": 63,
+          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4"
+        },
+        {
+          "id": 3,
+          "title": "Simple Words",
+          "date": "Jun 12, 2025",
+          "comments": 68,
+          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "HSK 2 Grammar Essentials",
+      "shortTitle": "HSK 2",
+      "description": "Core grammar patterns and structures",
+      "longDescription": "Focuses on sentence building, daily conversation grammar, and essential structures used in everyday Chinese.",
+      "level": "Elementary",
+      "rating": 4.7,
+      "price": 39,
+      "duration": "5 weeks",
+      "lessons": 25,
+      "students": 980,
+      "image": "bg-gradient-to-br from-green-400 to-teal-500",
+      "icon": "✏️",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Grammar Basics",
+          "date": "May 30, 2025",
+          "comments": 120
+        },
+        {
+          "id": 2,
+          "title": "Daily Sentences",
+          "date": "Jun 6, 2025",
+          "comments": 75
+        },
+        {
+          "id": 3,
+          "title": "Question Forms",
+          "date": "Jun 13, 2025",
+          "comments": 42
+        },
+        {
+          "id": 4,
+          "title": "Negation Patterns",
+          "date": "Jun 20, 2025",
+          "comments": 38
+        },
+        {
+          "id": 5,
+          "title": "Practice Exercises",
+          "date": "Jun 27, 2025",
+          "comments": 33
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "HSK 3 Reading Practice",
+      "shortTitle": "HSK 3",
+      "description": "Intermediate reading comprehension",
+      "longDescription": "Improves reading speed and understanding through real-world texts, short stories, and exam-style questions.",
+      "level": "Intermediate",
+      "rating": 4.9,
+      "price": 49,
+      "duration": "6 weeks",
+      "lessons": 30,
+      "students": 860,
+      "image": "bg-gradient-to-br from-orange-400 to-red-500",
+      "icon": "📖",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Reading Short Stories",
+          "date": "May 31, 2025",
+          "comments": 90
+        },
+        {
+          "id": 2,
+          "title": "Understanding Paragraphs",
+          "date": "Jun 7, 2025",
+          "comments": 70
+        },
+        {
+          "id": 3,
+          "title": "Reading Comprehension Practice",
+          "date": "Jun 14, 2025",
+          "comments": 80
+        },
+        {
+          "id": 4,
+          "title": "Exam-style Questions",
+          "date": "Jun 21, 2025",
+          "comments": 65
+        },
+        {
+          "id": 5,
+          "title": "Advanced Texts",
+          "date": "Jun 28, 2025",
+          "comments": 60
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "HSK 4 Listening Skills",
+      "shortTitle": "HSK 4",
+      "description": "Audio lessons and exercises",
+      "longDescription": "Advanced listening practice with native speakers, exam simulations, and real-life conversations.",
+      "level": "Upper-Intermediate",
+      "rating": 4.6,
+      "price": 59,
+      "duration": "6 weeks",
+      "lessons": 32,
+      "students": 640,
+      "image": "bg-gradient-to-br from-pink-400 to-purple-500",
+      "icon": "🎧",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Listening Basics",
+          "date": "Jun 1, 2025",
+          "comments": 45
+        },
+        {
+          "id": 2,
+          "title": "Everyday Conversations",
+          "date": "Jun 8, 2025",
+          "comments": 55
+        },
+        {
+          "id": 3,
+          "title": "Dialogues Practice",
+          "date": "Jun 15, 2025",
+          "comments": 50
+        },
+        {
+          "id": 4,
+          "title": "Listening Tests",
+          "date": "Jun 22, 2025",
+          "comments": 40
+        },
+        {
+          "id": 5,
+          "title": "Final Review",
+          "date": "Jun 29, 2025",
+          "comments": 35
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "HSK 5 Advanced Writing",
+      "shortTitle": "HSK 5",
+      "description": "Essay and composition practice",
+      "longDescription": "Master advanced writing skills, formal essays, argument structure, and exam-focused writing techniques.",
+      "level": "Advanced",
+      "rating": 4.8,
+      "price": 69,
+      "duration": "7 weeks",
+      "lessons": 35,
+      "students": 420,
+      "image": "bg-gradient-to-br from-yellow-400 to-orange-500",
+      "icon": "✍️",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Essay Basics",
+          "date": "Jun 2, 2025",
+          "comments": 25
+        },
+        {
+          "id": 2,
+          "title": "Argument Structure",
+          "date": "Jun 9, 2025",
+          "comments": 30
+        },
+        {
+          "id": 3,
+          "title": "Writing Practice",
+          "date": "Jun 16, 2025",
+          "comments": 28
+        },
+        {
+          "id": 4,
+          "title": "Advanced Compositions",
+          "date": "Jun 23, 2025",
+          "comments": 20
+        },
+        {
+          "id": 5,
+          "title": "Final Review",
+          "date": "Jun 30, 2025",
+          "comments": 18
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "HSK 6 Master Course",
+      "shortTitle": "HSK 6",
+      "description": "Complete mastery preparation",
+      "longDescription": "Full mastery course including advanced reading, listening, writing, mock exams, and real-life usage.",
+      "level": "Mastery",
+      "rating": 5.0,
+      "price": 99,
+      "duration": "8 weeks",
+      "lessons": 40,
+      "students": 210,
+      "image": "bg-gradient-to-br from-indigo-400 to-blue-500",
+      "icon": "🏆",
+      "chapters": [
+        {
+          "id": 1,
+          "title": "Master Reading",
+          "date": "Jun 3, 2025",
+          "comments": 15
+        },
+        {
+          "id": 2,
+          "title": "Master Listening",
+          "date": "Jun 10, 2025",
+          "comments": 12
+        },
+        {
+          "id": 3,
+          "title": "Master Writing",
+          "date": "Jun 17, 2025",
+          "comments": 10
+        },
+        {
+          "id": 4,
+          "title": "Mock Exams",
+          "date": "Jun 24, 2025",
+          "comments": 8
+        },
+        {
+          "id": 5,
+          "title": "Final Mastery Review",
+          "date": "Jul 1, 2025",
+          "comments": 5
+        }
+      ]
+    }
+  ],
+  "offlineCourses": [
+    {
+      "level": "HSK 1",
+      "price": "350,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-blue-500 to-blue-600"
+    },
+    {
+      "level": "HSK 2",
+      "price": "400,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-green-500 to-green-600"
+    },
+    {
+      "level": "HSK 3",
+      "price": "450,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-orange-500 to-orange-600"
+    },
+    {
+      "level": "HSK 4",
+      "price": "500,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-pink-500 to-pink-600"
+    },
+    {
+      "level": "HSK 5",
+      "price": "550,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-yellow-500 to-yellow-600"
+    },
+    {
+      "level": "HSK 6",
+      "price": "600,000₮",
+      "startDate": "2026.01.15",
+      "endDate": "2026.02.15",
+      "color": "from-indigo-500 to-indigo-600"
+    }
+  ],
+  "contactPage": {
+    "hero": {
+      "title": "Бидэнтэй холбогдох",
+      "subtitle": "HSK 1-6 хүртэлх бүх түвшний хичээлүүд. Туршлагатай багш нар таныг амжилтанд хүргэнэ."
+    },
+    "contactInfo": {
+      "title": "Холбоо барих мэдээлэл",
+      "phone": {
+        "label": "Утас",
+        "numbers": ["+976 9999-9999", "+976 8888-8888"]
+      },
+      "email": {
+        "label": "Имэйл",
+        "addresses": ["info@hskmongolia.mn", "contact@hskmongolia.mn"]
+      },
+      "address": {
+        "label": "Хаяг",
+        "lines": ["Улаанбаатар хот, Сүхбаатар дүүрэг", "Төв талбай, Тэнгис кино театрын зүүн талд"]
+      },
+      "workingHours": {
+        "label": "Ажиллах цаг",
+        "schedule": ["Даваа - Баасан: 09:00 - 18:00", "Бямба: 10:00 - 16:00"]
+      }
+    },
+    "hskLevelsOffered": {
+      "title": "Бидний санал болгож буй түвшин",
+      "levels": [
+        { "code": "hsk1", "name": "HSK 1 - Анхан шат", "words": "150 үг" },
+        { "code": "hsk2", "name": "HSK 2 - Суурь шат", "words": "300 үг" },
+        { "code": "hsk3", "name": "HSK 3 - Дунд шат", "words": "600 үг" },
+        { "code": "hsk4", "name": "HSK 4 - Дунд дээд шат", "words": "1200 үг" },
+        { "code": "hsk5", "name": "HSK 5 - Ахисан шат", "words": "2500 үг" },
+        { "code": "hsk6", "name": "HSK 6 - Дээд шат", "words": "5000+ үг" }
+      ]
+    },
+    "form": {
+      "title": "Мессеж илгээх",
+      "successMessage": {
+        "title": "Амжилттай илгээгдлээ!",
+        "subtitle": "Бид таньтай удахгүй холбогдох болно."
+      },
+      "fields": {
+        "name": { "label": "Нэр", "placeholder": "Таны нэр" },
+        "email": { "label": "Имэйл", "placeholder": "example@email.com" },
+        "phone": { "label": "Утасны дугаар", "placeholder": "+976 9999-9999" },
+        "level": { 
+          "label": "Сонирхож буй түвшин", 
+          "placeholder": "Түвшин сонгох",
+          "options": [
+            { "value": "hsk1", "label": "HSK 1 - Анхан шат" },
+            { "value": "hsk2", "label": "HSK 2 - Суурь шат" },
+            { "value": "hsk3", "label": "HSK 3 - Дунд шат" },
+            { "value": "hsk4", "label": "HSK 4 - Дунд дээд шат" },
+            { "value": "hsk5", "label": "HSK 5 - Ахисан шат" },
+            { "value": "hsk6", "label": "HSK 6 - Дээд шат" }
+          ]
+        },
+        "message": { "label": "Мессеж", "placeholder": "Таны асуулт эсвэл мессеж..." }
+      },
+      "submitButton": "Илгээх"
+    }
+  },
+  "footer": {
+    "brand": {
+      "name": "汉语学院",
+      "description": "Хятад хэл сурах хамгийн хялбар, орчин үеийн онлайн сургалтын платформ."
+    },
+    "links": {
+      "title": "Холбоосууд",
+      "items": ["Хичээлүүд", "HSK бэлтгэл", "Багш нар", "Тусламж"]
+    },
+    "contact": {
+      "title": "Холбоо барих",
+      "email": "info@chinese.edu",
+      "phone": "+976 9999 9999",
+      "address": "Улаанбаатар, Монгол"
+    },
+    "copyright": {
+      "text": "© 2024 HSK Mongolia. Бүх эрх хуулиар хамгаалагдсан.",
+      "tagline": "Хятад хэл амжилттай эзэмших таны сонголт"
+    }
+  }
+}

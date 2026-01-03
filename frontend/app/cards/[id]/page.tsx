@@ -3,19 +3,19 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
-import data from "../../../data/data.json"; // make sure the path is correct
+import data from "../../../public/data/data.json";
 
 /* ================= TYPES ================= */
 
 interface Chapter {
   id: number;
   title: string;
-  video: string;
   date: string;
   comments: number;
+  video?: string;
 }
 
-interface CardDetail {
+interface Course {
   id: number;
   title: string;
   icon: string;
@@ -32,66 +32,25 @@ interface CardDetail {
 /* ================= COMPONENT ================= */
 
 export default function CardDetailPage() {
-  const params = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const idParam = params?.id;
 
-  const [card, setCard] = useState<CardDetail | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [video, setVideo] = useState<string | null>(null);
 
-  /* ================= DATA LOAD ================= */
+  /* ================= LOAD ================= */
 
   useEffect(() => {
-    if (!idParam) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const cards = data as CardDetail[];
-      const found = cards.find((c) => c.id === Number(idParam));
-      setCard(found || null);
-    } catch (err) {
-      console.error("Failed to load data:", err);
-      setCard(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [idParam]);
-
-  /* ================= LOADING ================= */
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading course details...</p>
-        </div>
-      </div>
-    );
-  }
+    const found = data.courses.find((c) => c.id === Number(id));
+    setCourse(found || null);
+  }, [id]);
 
   /* ================= NOT FOUND ================= */
 
-  if (!card) {
+  if (!course) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-center bg-white p-8 rounded-xl shadow-lg max-w-md">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Course Not Found</h2>
-          <p className="text-gray-600 mb-6">
-            The course you are looking for does not exist or has been removed.
-          </p>
-          <button
-            onClick={() => router.push("/cards")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium"
-          >
-            ← Back to Courses
-          </button>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <button onClick={() => router.push("/cards")}>← Back</button>
       </div>
     );
   }
@@ -100,103 +59,68 @@ export default function CardDetailPage() {
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {/* LEFT SIDE */}
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10">
+
+        {/* LEFT */}
         <div>
-          {/* IMAGE / VIDEO PLAYER */}
-          <div className="bg-black border rounded-xl overflow-hidden">
-            {selectedVideo ? (
-              <video key={selectedVideo} controls className="w-full h-auto" src={selectedVideo}>
-                Your browser does not support the video tag.
-              </video>
+          <div className="bg-black rounded-xl overflow-hidden">
+            {video ? (
+              <video controls src={video} className="w-full" />
             ) : (
-              <div className="bg-white p-10 flex justify-center">
-                <span className="text-9xl">{card.icon}</span>
+              <div className="bg-white p-12 flex justify-center">
+                <span className="text-8xl">{course.icon}</span>
               </div>
             )}
           </div>
 
-          {/* CHAPTER LIST */}
-          {card.chapters && (
-            <div className="mt-8 bg-[#1c1c1c] rounded-xl overflow-hidden">
-              <div className="flex justify-between items-center px-5 py-4 border-b border-gray-700">
-                <h3 className="text-white font-semibold text-lg">Chapter List</h3>
-                <span className="text-gray-400 text-sm cursor-pointer">⇅</span>
-              </div>
-
-              {card.chapters.map((ch) => (
+          {course.chapters && (
+            <div className="mt-6 bg-[#1c1c1c] rounded-xl overflow-hidden">
+              {course.chapters.map((ch) => (
                 <div
                   key={ch.id}
-                  onClick={() => setSelectedVideo(ch.video)}
-                  className={`flex items-center justify-between px-5 py-4 border-b border-gray-800 hover:bg-[#2a2a2a] cursor-pointer transition ${
-                    selectedVideo === ch.video ? "bg-[#2a2a2a]" : ""
-                  }`}
+                  onClick={() => ch.video && setVideo(ch.video)}
+                  className="px-5 py-4 border-b border-gray-700 hover:bg-[#2a2a2a] cursor-pointer"
                 >
-                  {/* LEFT */}
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-14 bg-gray-700 rounded-lg flex items-center justify-center">
-                      <span className="text-xl">{card.icon}</span>
-                    </div>
-
-                    <div>
-                      <p className="text-gray-400 text-sm">
-                        #{String(ch.id).padStart(3, "0")} · {ch.date}
-                      </p>
-                      <p className="text-white font-medium">{ch.title}</p>
-                      <p className="text-gray-500 text-xs">💬 {ch.comments}</p>
-                    </div>
-                  </div>
-
-                  {/* RIGHT */}
-                  <div className="text-white text-xl">{selectedVideo === ch.video ? "▶" : "⋯"}</div>
+                  <p className="text-gray-400 text-sm">
+                    #{ch.id} · {ch.date}
+                  </p>
+                  <p className="text-white">{ch.title}</p>
+                  <p className="text-gray-500 text-xs">💬 {ch.comments}</p>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="bg-white rounded-xl shadow p-6 order-1 lg:order-2">
-          {/* BACK BUTTON */}
+        {/* RIGHT */}
+        <div className="bg-white rounded-xl shadow p-6">
           <button
             onClick={() => router.back()}
-            className="mb-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition"
+            className="mb-4 text-sm bg-gray-200 px-3 py-1 rounded"
           >
             ← Back
           </button>
 
-          <h1 className="text-2xl font-normal mb-2">{card.title}</h1>
+          <h1 className="text-2xl font-semibold mb-2">{course.title}</h1>
 
-          <p className="text-blue-600 text-sm mb-3 cursor-pointer hover:underline">Visit the HSK Learning Store</p>
-
-          {/* RATING */}
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-orange-500 font-bold">{card.rating}</span>
-            <div className="flex">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-4 h-4 ${i < Math.floor(card.rating) ? "fill-orange-400 text-orange-400" : "text-gray-300"}`}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-blue-600">({card.students})</span>
+            <span className="font-bold text-orange-500">{course.rating}</span>
+            <Star className="w-4 h-4 fill-orange-400 text-orange-400" />
+            <span className="text-sm text-blue-600">({course.students})</span>
           </div>
 
-          <hr className="my-4" />
+          <p className="text-3xl font-bold text-red-600 mb-4">
+            ${course.price}
+          </p>
 
-          {/* PRICE */}
-          <p className="text-3xl font-bold text-red-600 mb-4">${card.price}</p>
-
-          {/* SPECIFICATIONS */}
           <ul className="text-sm text-gray-700 space-y-2 mb-6">
-            <li>📚 Lessons: {card.lessons}</li>
-            <li>⏱ Duration: {card.duration}</li>
-            <li>🎯 Level: {card.level}</li>
-            <li>📝 {card.longDescription}</li>
+            <li>📚 Lessons: {course.lessons}</li>
+            <li>⏱ Duration: {course.duration}</li>
+            <li>🎯 Level: {course.level}</li>
+            <li>{course.longDescription}</li>
           </ul>
 
-          <button className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-lg font-medium transition">
+          <button className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-lg font-medium">
             Start Learning
           </button>
         </div>

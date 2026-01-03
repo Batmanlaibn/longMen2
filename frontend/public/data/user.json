@@ -1,0 +1,157 @@
+[
+  {
+    "ner": "bat",
+    "email": "bat@gmail.com",
+    "utas": "88717298",
+    "nas": 24,
+    "nuutsugs": "$2b$10$dRNJSWFQvuSkqnsDdm50ieX73YK6D2ITiPMsj5uLJCg.7mgOTbFWO",
+    "hskLevel": "HSK 2",
+    "joinDate": "2023-06-15",
+    "avatar": "👨‍🎓",
+    "courses": [
+      {
+        "id": 1,
+        "title": "HSK 2 Интенсив курс",
+        "level": "HSK 2",
+        "type": "online",
+        "progress": 75,
+        "schedule": "Даваа, Лхагва 19:00",
+        "startDate": "2023-07-01",
+        "duration": "3 сар"
+      }
+    ],
+    "achievements": [
+      {
+        "level": "HSK 1",
+        "date": "2023-09-20",
+        "score": 195
+      }
+    ],
+    "stats": {
+      "totalCourses": 1,
+      "certificates": 1,
+      "studyHours": 86
+    }
+  },
+  {
+    "ner": "bat",
+    "email": "bt@gmail.com",
+    "utas": "88717298",
+    "nas": 55,
+    "nuutsugs": "$2b$10$TTZkwmORA2AdwxGiKLMPk.ZLg4NRTSnn3Il0Wfvd5GlgNQnxX1DlO",
+    "hskLevel": "HSK 3",
+    "joinDate": "2024-01-15",
+    "avatar": "👨‍🎓",
+    "bio": "HSK суралцагч, Хятад хэлийг сонирхдог",
+    "darkMode": false,
+    "emailNotifications": true,
+    "pushNotifications": true,
+    "soundEffects": true,
+    "autoplay": false,
+    "language": "mn",
+    "timezone": "UTC+8",
+    "twoFactor": false,
+    "studyGoal": "30",
+    "difficulty": "Дунд",
+    "notificationTypes": {
+      "lessonReminders": true,
+      "newContent": true,
+      "progressReport": true,
+      "scoreUpdates": true
+    },
+    "courses": [
+      {
+        "id": 1,
+        "title": "HSK 3 Интенсив курс",
+        "level": "HSK 3",
+        "type": "online",
+        "progress": 65,
+        "schedule": "Даваа, Лхагва 19:00",
+        "startDate": "2024-01-20",
+        "duration": "3 сар"
+      },
+      {
+        "id": 2,
+        "title": "HSK 4 Бэлтгэл курс",
+        "level": "HSK 4",
+        "type": "classroom",
+        "progress": 30,
+        "schedule": "Мягмар, Баасан 18:00",
+        "location": "Сүхбаатар дүүрэг, Барилга 5",
+        "startDate": "2024-02-01",
+        "duration": "4 сар"
+      },
+      {
+        "id": 3,
+        "title": "Хэлний дасгал - Speaking",
+        "level": "HSK 3-4",
+        "type": "online",
+        "progress": 45,
+        "schedule": "Бямба 10:00",
+        "startDate": "2024-01-25",
+        "duration": "2 сар"
+      }
+    ],
+    "achievements": [
+      {
+        "level": "HSK 2",
+        "date": "2023-10-15",
+        "score": 245
+      },
+      {
+        "level": "HSK 1",
+        "date": "2023-06-20",
+        "score": 195
+      }
+    ],
+    "stats": {
+      "totalCourses": 3,
+      "certificates": 2,
+      "studyHours": 124
+    }
+  },
+  {
+    "ner": "ADMIN",
+    "email": "ADMIN@GMAIL.COM",
+    "utas": "88717298",
+    "nas": 100,
+    "nuutsugs": "$2b$10$SRhh.3E57QgZf3gZQBBWuusqoVBVSukGqaVgJuqJ066P0qIGo3TK.",
+    "hskLevel": "HSK 4",
+    "joinDate": "2023-01-01",
+    "avatar": "👑",
+    "courses": [
+      {
+        "id": 1,
+        "title": "HSK 4 Ахисан курс",
+        "level": "HSK 4",
+        "type": "online",
+        "progress": 85,
+        "schedule": "Даваа, Пүрэв 20:00",
+        "startDate": "2023-02-01",
+        "duration": "4 сар"
+      }
+    ],
+    "achievements": [
+      {
+        "level": "HSK 3",
+        "date": "2023-08-10",
+        "score": 270
+      },
+      {
+        "level": "HSK 2",
+        "date": "2023-05-15",
+        "score": 250
+      },
+      {
+        "level": "HSK 1",
+        "date": "2023-03-20",
+        "score": 200
+      }
+    ],
+    "stats": {
+      "totalCourses": 1,
+      "certificates": 3,
+      "studyHours": 245
+    }
+  }
+]

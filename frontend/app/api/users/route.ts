@@ -3,11 +3,11 @@ import fs from "fs";
 import path from "path";
 import bcrypt from "bcryptjs";
 
-import users from "../../../data/user.json";
+import users from "../../../public/data/user.json";
 
-export async function GET() {
-  return NextResponse.json(users);
-}
+// export async function GET() {
+//   return NextResponse.json(users);
+// }
 
 
 
@@ -20,7 +20,7 @@ type User = {
   nuutsugs: string;
 };
 
-const filePath = path.join(process.cwd(), "data", "user.json");
+const filePath = path.join(process.cwd(), "public", "data", "user.json");
 
 export async function POST(req: NextRequest) {
   try {

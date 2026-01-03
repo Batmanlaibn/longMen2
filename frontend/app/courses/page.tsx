@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { BookOpen, Star, Clock, GraduationCap, Users, ChevronRight, Filter, Search, Menu, X } from "lucide-react";
+import { BookOpen, Star, Clock, GraduationCap, Users, ChevronRight, Filter, Search } from "lucide-react";
 import Header from "../components/header";
 
 /* ================= TYPES ================= */
@@ -22,117 +22,52 @@ interface Course {
   icon: string;
 }
 
-/* ================= HEADER COMPONENT ================= */
-
+interface OfflineCourse {
+  level: string;
+  price: string;
+  startDate: string;
+  endDate: string;
+  color: string;
+}
 
 /* ================= MAIN COMPONENT ================= */
 
 const HSKCoursesPage: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [offlineCourses, setOfflineCourses] = useState<OfflineCourse[]>([]);
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [selectedLevel, setSelectedLevel] = useState<string>("All");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("level");
+  const [loading, setLoading] = useState<boolean>(true);
 
-  /* ================= DATA LOAD ================= */
+  /* ================= DATA LOAD FROM JSON ================= */
 
   useEffect(() => {
-    const mockData: Course[] = [
-      {
-        id: 1,
-        title: "HSK 1 Vocabulary Cards",
-        shortTitle: "HSK 1",
-        description: "150 essential Chinese characters",
-        longDescription: "This course covers the most common 150 Chinese characters, basic pronunciation, and simple sentence structures for absolute beginners.",
-        level: "Beginner",
-        rating: 4.8,
-        price: 350,
-        duration: "4 weeks",
-        lessons: 20,
-        students: 1200,
-        image: "bg-gradient-to-br from-blue-400 to-purple-500",
-        icon: "📚"
-      },
-      {
-        id: 2,
-        title: "HSK 2 Grammar Essentials",
-        shortTitle: "HSK 2",
-        description: "Core grammar patterns and structures",
-        longDescription: "Focuses on sentence building, daily conversation grammar, and essential structures used in everyday Chinese.",
-        level: "Elementary",
-        rating: 4.7,
-        price: 400,
-        duration: "5 weeks",
-        lessons: 25,
-        students: 980,
-        image: "bg-gradient-to-br from-green-400 to-teal-500",
-        icon: "✏️"
-      },
-      {
-        id: 3,
-        title: "HSK 3 Reading Practice",
-        shortTitle: "HSK 3",
-        description: "Intermediate reading comprehension",
-        longDescription: "Improves reading speed and understanding through real-world texts, short stories, and exam-style questions.",
-        level: "Intermediate",
-        rating: 4.9,
-        price: 450,
-        duration: "6 weeks",
-        lessons: 30,
-        students: 860,
-        image: "bg-gradient-to-br from-orange-400 to-red-500",
-        icon: "📖"
-      },
-      {
-        id: 4,
-        title: "HSK 4 Listening Skills",
-        shortTitle: "HSK 4",
-        description: "Audio lessons and exercises",
-        longDescription: "Advanced listening practice with native speakers, exam simulations, and real-life conversations.",
-        level: "Upper-Intermediate",
-        rating: 4.6,
-        price: 500,
-        duration: "6 weeks",
-        lessons: 32,
-        students: 640,
-        image: "bg-gradient-to-br from-pink-400 to-purple-500",
-        icon: "🎧"
-      },
-      {
-        id: 5,
-        title: "HSK 5 Advanced Writing",
-        shortTitle: "HSK 5",
-        description: "Essay and composition practice",
-        longDescription: "Master advanced writing skills, formal essays, argument structure, and exam-focused writing techniques.",
-        level: "Advanced",
-        rating: 4.8,
-        price: 550,
-        duration: "7 weeks",
-        lessons: 35,
-        students: 420,
-        image: "bg-gradient-to-br from-yellow-400 to-orange-500",
-        icon: "✍️"
-      },
-      {
-        id: 6,
-        title: "HSK 6 Master Course",
-        shortTitle: "HSK 6",
-        description: "Complete mastery preparation",
-        longDescription: "Full mastery course including advanced reading, listening, writing, mock exams, and real-life usage.",
-        level: "Mastery",
-        rating: 5.0,
-        price: 600,
-        duration: "8 weeks",
-        lessons: 40,
-        students: 210,
-        image: "bg-gradient-to-br from-indigo-400 to-blue-500",
-        icon: "🏆"
-      }
-    ];
+    const loadData = async () => {
+      try {
+        const response = await fetch("/data/data.json"); // root-relative URL
 
-    setCourses(mockData);
-    setFilteredCourses(mockData);
+        if (!response.ok) {
+          throw new Error("Failed to load data.json");
+        }
+
+        const data = await response.json();
+
+        setCourses(data.courses);
+        setFilteredCourses(data.courses);
+        setOfflineCourses(data.offlineCourses ?? []);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
+
+
 
   /* ================= FILTERING & SORTING ================= */
 
@@ -167,27 +102,35 @@ const HSKCoursesPage: React.FC = () => {
 
   const levels = ["All", "Beginner", "Elementary", "Intermediate", "Upper-Intermediate", "Advanced", "Mastery"];
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    );
+  }
+
   /* ================= RENDER ================= */
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       <Header />
       
-      {/* Hero Section */}
+      {/* Hero Section - Online сургалт */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Таны сургалт - HSK Chinese Courses</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Online HSK Courses</h1>
           <p className="text-xl text-blue-100 mb-6">
             Master Mandarin Chinese from beginner to advanced with our comprehensive HSK courses
           </p>
           <div className="flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
               <BookOpen className="w-5 h-5" />
-              <span>6 Complete Courses</span>
+              <span>{courses.length} Complete Courses</span>
             </div>
             <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
               <Users className="w-5 h-5" />
-              <span>4,310+ Students</span>
+              <span>{courses.reduce((sum, c) => sum + c.students, 0)}+ Students</span>
             </div>
             <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
               <Star className="w-5 h-5 fill-yellow-300 text-yellow-300" />
@@ -243,8 +186,8 @@ const HSKCoursesPage: React.FC = () => {
           Showing {filteredCourses.length} of {courses.length} courses
         </div>
 
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Online Course Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {filteredCourses.map((course) => (
             <div
               key={course.id}
@@ -288,10 +231,10 @@ const HSKCoursesPage: React.FC = () => {
 
                 <div className="flex items-center justify-between pt-4 border-t border-gray-700">
                   <div>
-                    <span className="text-3xl font-bold text-white">{course.price}₮</span>
+                    <span className="text-3xl font-bold text-white">${course.price}</span>
                   </div>
                   <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/50">
-                    <span className="font-medium">Бүртгүүлэх</span>
+                    <span className="font-medium">Enroll</span>
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </div>
@@ -307,6 +250,43 @@ const HSKCoursesPage: React.FC = () => {
             <p className="text-gray-400">Try adjusting your filters or search term</p>
           </div>
         )}
+      </div>
+
+      {/* Таны сургалт Section - Танхимын сургалт */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border border-purple-500/30 mb-8">
+          <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+            <GraduationCap className="w-8 h-8 text-purple-400" />
+            Таны сургалт - Танхимын сургалт
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {offlineCourses.map((course, index) => (
+              <div 
+                key={index}
+                className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
+              >
+                <div className={`bg-gradient-to-r ${course.color} text-white text-center py-3 px-4 rounded-lg mb-4 font-bold text-lg`}>
+                  {course.level}
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-white mb-4">{course.price}</div>
+                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
+                    <div className="text-xs text-gray-400 mb-1">Эхлэх огноо:</div>
+                    <div className="text-sm text-white font-medium">{course.startDate}</div>
+                  </div>
+                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
+                    <div className="text-xs text-gray-400 mb-1">Дуусах огноо:</div>
+                    <div className="text-sm text-white font-medium">{course.endDate}</div>
+                  </div>
+                  <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors duration-300 font-medium flex items-center justify-center gap-2">
+                    <span>Бүртгүүлэх</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Footer Info */}
@@ -326,74 +306,6 @@ const HSKCoursesPage: React.FC = () => {
             <Star className="w-12 h-12 text-yellow-500 mx-auto mb-3 fill-current" />
             <h4 className="text-white font-semibold mb-2">Proven Results</h4>
             <p className="text-gray-400 text-sm">High success rate in HSK exams</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">HSK Chinese Courses</h1>
-          <p className="text-xl text-blue-100 mb-6">
-            Master Mandarin Chinese from beginner to advanced with our comprehensive HSK courses
-          </p>
-          <div className="flex flex-wrap gap-4 text-sm">
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
-              <BookOpen className="w-5 h-5" />
-              <span>6 Complete Courses</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
-              <Users className="w-5 h-5" />
-              <span>4,310+ Students</span>
-            </div>
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full">
-              <Star className="w-5 h-5 fill-yellow-300 text-yellow-300" />
-              <span>4.8 Average Rating</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Таны сургалт Section */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border border-purple-500/30 mb-8">
-          <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-            <GraduationCap className="w-8 h-8 text-purple-400" />
-            Таны сургалт
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { level: "HSK 1", price: "350,000₮", color: "from-blue-500 to-blue-600" },
-              { level: "HSK 2", price: "400,000₮", color: "from-green-500 to-green-600" },
-              { level: "HSK 3", price: "450,000₮", color: "from-orange-500 to-orange-600" },
-              { level: "HSK 4", price: "500,000₮", color: "from-pink-500 to-pink-600" },
-              { level: "HSK 5", price: "550,000₮", color: "from-yellow-500 to-yellow-600" },
-              { level: "HSK 6", price: "600,000₮", color: "from-indigo-500 to-indigo-600" }
-            ].map((course, index) => (
-              <div 
-                key={index}
-                className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
-              >
-                <div className={`bg-gradient-to-r ${course.color} text-white text-center py-3 px-4 rounded-lg mb-4 font-bold text-lg`}>
-                  {course.level}
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-4">{course.price}</div>
-                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
-                    <div className="text-xs text-gray-400 mb-1">Эхлэх огноо:</div>
-                    <div className="text-sm text-white font-medium">2026.01.15</div>
-                  </div>
-                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
-                    <div className="text-xs text-gray-400 mb-1">Дуусах огноо:</div>
-                    <div className="text-sm text-white font-medium">2026.02.15</div>
-                  </div>
-                  <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors duration-300 font-medium flex items-center justify-center gap-2">
-                    <span>Бүртгүүлэх</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>
