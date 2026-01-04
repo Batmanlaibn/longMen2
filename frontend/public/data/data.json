@@ -102,14 +102,38 @@
           "title": "Introduction to HSK 1",
           "date": "May 29, 2025",
           "comments": 240,
-          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4"
+          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4",
+          "vocabulary": [
+            { "hanzi": "我", "pinyin": "wǒ", "mongolian": "би" },
+            { "hanzi": "你", "pinyin": "nǐ", "mongolian": "чи" },
+            { "hanzi": "他", "pinyin": "tā", "mongolian": "тэр (эрэгтэй)" },
+            { "hanzi": "她", "pinyin": "tā", "mongolian": "тэр (эмэгтэй)" },
+            { "hanzi": "是", "pinyin": "shì", "mongolian": "байх, мөн" },
+            { "hanzi": "不", "pinyin": "bù", "mongolian": "үгүй" },
+            { "hanzi": "了", "pinyin": "le", "mongolian": "болсон" },
+            { "hanzi": "在", "pinyin": "zài", "mongolian": "байх, ...д" },
+            { "hanzi": "有", "pinyin": "yǒu", "mongolian": "байх, эзэмших" },
+            { "hanzi": "人", "pinyin": "rén", "mongolian": "хүн" }
+          ]
         },
         {
           "id": 2,
           "title": "Basic Characters",
           "date": "Jun 5, 2025",
           "comments": 63,
-          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4"
+          "video": "/3bf5ae5e-e296-4361-96c6-505ae5e8ef30.mp4",
+          "vocabulary": [
+            { "hanzi": "这", "pinyin": "zhè", "mongolian": "энэ" },
+            { "hanzi": "那", "pinyin": "nà", "mongolian": "тэр" },
+            { "hanzi": "们", "pinyin": "men", "mongolian": "тэд" },
+            { "hanzi": "和", "pinyin": "hé", "mongolian": "ба, хамт" },
+            { "hanzi": "好", "pinyin": "hǎo", "mongolian": "сайн" },
+            { "hanzi": "学", "pinyin": "xué", "mongolian": "сурах" },
+            { "hanzi": "爱", "pinyin": "ài", "mongolian": "хайрлах" },
+            { "hanzi": "看", "pinyin": "kàn", "mongolian": "харах" },
+            { "hanzi": "吃", "pinyin": "chī", "mongolian": "идэх" },
+            { "hanzi": "喝", "pinyin": "hē", "mongolian": "уух" }
+          ]
         },
         {
           "id": 3,

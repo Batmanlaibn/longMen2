@@ -7,12 +7,19 @@ import data from "../../../public/data/data.json";
 
 /* ================= TYPES ================= */
 
+interface Vocabulary {
+  hanzi: string;
+  pinyin: string;
+  mongolian: string;
+}
+
 interface Chapter {
   id: number;
   title: string;
   date: string;
   comments: number;
   video?: string;
+  vocabulary?: Vocabulary[];
 }
 
 interface Course {
@@ -36,6 +43,7 @@ export default function CardDetailPage() {
   const router = useRouter();
 
   const [course, setCourse] = useState<Course | null>(null);
+  const [activeChapter, setActiveChapter] = useState<Chapter | null>(null);
   const [video, setVideo] = useState<string | null>(null);
 
   /* ================= LOAD ================= */
@@ -50,10 +58,22 @@ export default function CardDetailPage() {
   if (!course) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <button onClick={() => router.push("/cards")}>← Back</button>
+        <button
+          onClick={() => router.push("/cards")}
+          className="px-4 py-2 bg-gray-200 rounded"
+        >
+          ← Back
+        </button>
       </div>
     );
   }
+
+  /* ================= HANDLER ================= */
+
+  const handleChapterClick = (ch: Chapter) => {
+    setActiveChapter(ch);
+    if (ch.video) setVideo(ch.video);
+  };
 
   /* ================= RENDER ================= */
 
@@ -63,6 +83,7 @@ export default function CardDetailPage() {
 
         {/* LEFT */}
         <div>
+          {/* Video or Icon */}
           <div className="bg-black rounded-xl overflow-hidden">
             {video ? (
               <video controls src={video} className="w-full" />
@@ -73,12 +94,13 @@ export default function CardDetailPage() {
             )}
           </div>
 
+          {/* Chapters */}
           {course.chapters && (
             <div className="mt-6 bg-[#1c1c1c] rounded-xl overflow-hidden">
               {course.chapters.map((ch) => (
                 <div
                   key={ch.id}
-                  onClick={() => ch.video && setVideo(ch.video)}
+                  onClick={() => handleChapterClick(ch)}
                   className="px-5 py-4 border-b border-gray-700 hover:bg-[#2a2a2a] cursor-pointer"
                 >
                   <p className="text-gray-400 text-sm">
@@ -88,6 +110,27 @@ export default function CardDetailPage() {
                   <p className="text-gray-500 text-xs">💬 {ch.comments}</p>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* Active Chapter Vocabulary */}
+          {activeChapter?.vocabulary && (
+            <div className="mt-6 bg-gray-50 p-4 rounded-lg max-h-96 overflow-y-auto">
+              <h3 className="font-semibold mb-3 text-lg">
+                📝 {activeChapter.title} Vocabulary
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {activeChapter.vocabulary.map((word, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white p-3 rounded border border-gray-200 shadow-sm text-center"
+                  >
+                    <div className="text-2xl font-bold mb-1">{word.hanzi}</div>
+                    <div className="text-sm text-blue-600 mb-1">{word.pinyin}</div>
+                    <div className="text-xs text-gray-700">{word.mongolian}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

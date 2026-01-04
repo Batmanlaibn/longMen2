@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { BookOpen, Star, ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import OfflineCourse from "../cards/classroom_training/page";
 
 /* ================= TYPES ================= */
 
@@ -17,12 +18,15 @@ interface CardItem {
   icon: string;
 }
 
+
+
 /* ================= COMPONENT ================= */
 
 export default function CardGridSystem() {
   const [cards, setCards] = useState<CardItem[]>([]);
   const [liked, setLiked] = useState<Set<number>>(new Set());
   const router = useRouter();
+
 
   /* ================= LOAD DATA ================= */
 
@@ -34,6 +38,9 @@ export default function CardGridSystem() {
       })
       .catch(console.error);
   }, []);
+
+
+
 
   /* ================= LIKE ================= */
 
@@ -130,6 +137,12 @@ export default function CardGridSystem() {
           </div>
         ))}
       </div>
+
+      <OfflineCourse />
+
+
+      
+
     </div>
   );
 }

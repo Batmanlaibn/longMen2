@@ -3,8 +3,27 @@
 import React, { useState, useEffect } from "react";
 import { BookOpen, Star, Clock, GraduationCap, Users, ChevronRight, Filter, Search } from "lucide-react";
 import Header from "../components/header";
+import CardGridSystem from "../cards/card";
+import OfflineCourse from "../cards/classroom_training/page";
+
 
 /* ================= TYPES ================= */
+
+
+interface Vocabulary {
+  hanzi: string;
+  pinyin: string;
+  mongolian: string;
+}
+
+interface Chapter {
+  id: number;
+  title: string;
+  date: string;
+  comments: number;
+  video?: string;
+  vocabulary?: Vocabulary[];
+}
 
 interface Course {
   id: number;
@@ -20,6 +39,7 @@ interface Course {
   students: number;
   image: string;
   icon: string;
+  chapters?: Chapter[];
 }
 
 interface OfflineCourse {
@@ -187,61 +207,7 @@ const HSKCoursesPage: React.FC = () => {
         </div>
 
         {/* Online Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 group"
-            >
-              <div className={`${course.image} h-48 flex items-center justify-center relative`}>
-                <span className="text-7xl group-hover:scale-110 transition-transform duration-300">
-                  {course.icon}
-                </span>
-                <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full">
-                  <span className="text-white text-sm font-medium">{course.level}</span>
-                </div>
-                <div className="absolute top-4 right-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full flex items-center gap-1">
-                  <Star className="w-4 h-4 fill-current" />
-                  <span className="font-bold text-sm">{course.rating}</span>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                  {course.shortTitle}
-                </h3>
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                  {course.description}
-                </p>
-
-                <div className="grid grid-cols-3 gap-2 mb-4 text-sm">
-                  <div className="flex items-center gap-1 text-gray-400">
-                    <Clock className="w-4 h-4" />
-                    <span>{course.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-gray-400">
-                    <BookOpen className="w-4 h-4" />
-                    <span>{course.lessons} lessons</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-gray-400">
-                    <Users className="w-4 h-4" />
-                    <span>{course.students}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-4 border-t border-gray-700">
-                  <div>
-                    <span className="text-3xl font-bold text-white">${course.price}</span>
-                  </div>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/50">
-                    <span className="font-medium">Enroll</span>
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <CardGridSystem />
 
         {filteredCourses.length === 0 && (
           <div className="text-center py-16">
@@ -253,39 +219,60 @@ const HSKCoursesPage: React.FC = () => {
       </div>
 
       {/* Таны сургалт Section - Танхимын сургалт */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 rounded-2xl p-8 border border-purple-500/30 mb-8">
-          <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-            <GraduationCap className="w-8 h-8 text-purple-400" />
-            Таны сургалт - Танхимын сургалт
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {offlineCourses.map((course, index) => (
-              <div 
-                key={index}
-                className="bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20"
-              >
-                <div className={`bg-gradient-to-r ${course.color} text-white text-center py-3 px-4 rounded-lg mb-4 font-bold text-lg`}>
-                  {course.level}
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-4">{course.price}</div>
-                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
-                    <div className="text-xs text-gray-400 mb-1">Эхлэх огноо:</div>
-                    <div className="text-sm text-white font-medium">{course.startDate}</div>
-                  </div>
-                  <div className="bg-gray-700/50 rounded-lg p-3 mb-3 text-left">
-                    <div className="text-xs text-gray-400 mb-1">Дуусах огноо:</div>
-                    <div className="text-sm text-white font-medium">{course.endDate}</div>
-                  </div>
-                  <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition-colors duration-300 font-medium flex items-center justify-center gap-2">
-                    <span>Бүртгүүлэх</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+      <OfflineCourse />
+
+
+      {/* HSK Course Details with Vocabulary */}
+      <div className="max-w-7xl mx-auto px-4 py-12 border-t border-gray-800">
+        <h2 className="text-3xl font-bold text-white mb-8 text-center">HSK Хичээлийн Дэлгэрэнгүй</h2>
+        <div className="space-y-6">
+          {courses.map((course) => (
+            <div key={course.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-5xl">{course.icon}</span>
+                <div>
+                  <h3 className="text-2xl font-bold text-white">{course.shortTitle}</h3>
+                  <p className="text-gray-400">{course.lessons} хичээл • {course.duration}</p>
                 </div>
               </div>
-            ))}
-          </div>
+              
+              {course.chapters && course.chapters.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-lg font-semibold text-white mb-3">Хичээлүүд:</h4>
+                  <div className="space-y-3">
+                    {course.chapters.map((chapter) => (
+                      <div key={chapter.id} className="bg-gray-700/50 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h5 className="text-white font-medium">{chapter.title}</h5>
+                          <span className="text-sm text-gray-400">{chapter.date}</span>
+                        </div>
+                        
+                        {chapter.vocabulary && chapter.vocabulary.length > 0 && (
+                          <div className="mt-3 border-t border-gray-600 pt-3">
+                            <p className="text-sm text-gray-400 mb-2">Үгийн сан ({chapter.vocabulary.length} үг):</p>
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                              {chapter.vocabulary.map((word, idx) => (
+                                <div 
+                                  key={idx}
+                                  className="bg-gray-800 rounded-lg p-3 border border-gray-600 hover:border-blue-500 transition-all duration-300"
+                                >
+                                  <div className="text-3xl text-center mb-2">{word.hanzi}</div>
+                                  <div className="text-center">
+                                    <p className="text-blue-400 text-sm font-medium">{word.pinyin}</p>
+                                    <p className="text-gray-400 text-xs mt-1">{word.mongolian}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
