@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Send, Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react';
 import Header from '../components/header';
 import data from '../../public/data/data.json';
+import SendAMessage from "./send_a_message/page";
+
 
 export default function ContactPage() {
   const { contactPage } = data;
@@ -105,131 +107,13 @@ export default function ContactPage() {
             </div>
 
             {/* HSK Levels */}
-            <div className="bg-gradient-to-br from-blue-600 to-red-600 rounded-2xl shadow-lg p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">{contactPage.hskLevelsOffered.title}</h3>
-              <div className="space-y-3">
-                {contactPage.hskLevelsOffered.levels.map((level) => (
-                  <div key={level.code} className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5" />
-                    <span>{level.name} ({level.words})</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            
+
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">{contactPage.form.title}</h3>
-            
-            {submitted ? (
-              <div className="text-center py-12">
-                <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-10 h-10 text-green-600" />
-                </div>
-                <h4 className="text-2xl font-bold text-gray-900 mb-2">
-                  {contactPage.form.successMessage.title}
-                </h4>
-                <p className="text-gray-600">{contactPage.form.successMessage.subtitle}</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Name */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {contactPage.form.fields.name.label}
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder={contactPage.form.fields.name.placeholder}
-                  />
-                </div>
+          <SendAMessage />
 
-                {/* Email */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {contactPage.form.fields.email.label}
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder={contactPage.form.fields.email.placeholder}
-                  />
-                </div>
-
-                {/* Phone */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {contactPage.form.fields.phone.label}
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder={contactPage.form.fields.phone.placeholder}
-                  />
-                </div>
-
-                {/* Level */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {contactPage.form.fields.level.label}
-                  </label>
-                  <select
-                    name="level"
-                    value={formData.level}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  >
-                    <option value="">{contactPage.form.fields.level.placeholder}</option>
-                    {contactPage.form.fields.level.options.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    {contactPage.form.fields.message.label}
-                  </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder={contactPage.form.fields.message.placeholder}
-                  />
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-red-600 text-white font-bold py-4 rounded-lg hover:from-blue-700 hover:to-red-700 transition transform hover:scale-105 flex items-center justify-center space-x-2"
-                >
-                  <span>{contactPage.form.submitButton}</span>
-                  <Send className="w-5 h-5" />
-                </button>
-              </form>
-            )}
-          </div>
         </div>
       </main>
 
