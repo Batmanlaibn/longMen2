@@ -3,7 +3,6 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
-import data from "../../../public/data/data.json";
 
 /* ================= TYPES ================= */
 
@@ -25,6 +24,7 @@ interface Chapter {
 interface Course {
   id: number;
   title: string;
+  description: string;
   icon: string;
   rating: number;
   students: number;
@@ -49,9 +49,69 @@ export default function CardDetailPage() {
   /* ================= LOAD ================= */
 
   useEffect(() => {
-    const found = data.courses.find((c) => c.id === Number(id));
-    setCourse(found || null);
+    const loadCourse = async () => {
+      try {
+        // Import data from JSON
+        const data = await import("../../../public/data/data.json");
+        const found = data.default.courses.find((c: Course) => c.id === Number(id));
+        
+        if (found) {
+          setCourse(found);
+          
+          // Save to viewing history
+          saveToHistory(found);
+        }
+      } catch (error) {
+        console.error("Error loading course:", error);
+      }
+    };
+
+    loadCourse();
   }, [id]);
+
+  /* ================= SAVE TO HISTORY ================= */
+
+  const saveToHistory = (courseData: Course) => {
+    try {
+      // Get current user from localStorage
+      const loggedInUser = localStorage.getItem('user');
+      if (!loggedInUser) return;
+
+      const { email } = JSON.parse(loggedInUser);
+      const historyKey = `viewHistory_${email}`;
+
+      // Get existing history
+      const existingHistory = localStorage.getItem(historyKey);
+      let history = existingHistory ? JSON.parse(existingHistory) : [];
+
+      // Create history item
+      const historyItem = {
+        id: courseData.id,
+        title: courseData.title,
+        description: courseData.description,
+        icon: courseData.icon,
+        level: courseData.level,
+        duration: courseData.duration,
+        viewedAt: new Date().toISOString()
+      };
+
+      // Remove if already exists (to update timestamp)
+      history = history.filter((item: any) => item.id !== courseData.id);
+
+      // Add to beginning of array
+      history.unshift(historyItem);
+
+      // Keep only last 20 items
+      if (history.length > 20) {
+        history = history.slice(0, 20);
+      }
+
+      // Save to localStorage
+      localStorage.setItem(historyKey, JSON.stringify(history));
+    } catch (error) {
+      console.error("Error saving to history:", error);
+    }
+  };
 
   /* ================= NOT FOUND ================= */
 

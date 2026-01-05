@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { BookOpen, Star, ShoppingCart, Heart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import OfflineCourse from "../cards/classroom_training/page";
 
 /* ================= TYPES ================= */
 
@@ -65,11 +64,7 @@ export default function CardGridSystem() {
   /* ================= RENDER ================= */
 
   return (
-    <div className="min-h-screen bg-gray-900 p-6">
-      <div className="max-w-7xl mx-auto mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">HSK Courses</h1>
-        <p className="text-gray-400">Choose your level and start learning</p>
-      </div>
+    <div className="min-h-screen ">
 
       <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {cards.map((card) => (
@@ -138,7 +133,6 @@ export default function CardGridSystem() {
         ))}
       </div>
 
-      <OfflineCourse />
 
 
       

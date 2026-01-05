@@ -208,6 +208,7 @@ const HSKCoursesPage: React.FC = () => {
 
         {/* Online Course Grid */}
         <CardGridSystem />
+        {/* <CardGridSystem courses={filteredCourses} /> */}
 
         {filteredCourses.length === 0 && (
           <div className="text-center py-16">
