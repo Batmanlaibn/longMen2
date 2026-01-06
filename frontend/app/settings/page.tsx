@@ -1,10 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { User, Bell, Globe, Shield, Moon, Sun, BookOpen, LogOut, Save, AlertCircle, CheckCircle } from 'lucide-react';
+import { User, Bell, Globe, Shield, BookOpen, LogOut, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import Header from '../components/header';
 
-interface UserSettings {
+import ProfileSettings from './profile/page';
+import NotificationSettings from './notifications/page';
+import LanguageSettings from './language/page';
+import SecuritySettings from './security/page';
+import LearningSettings from './learning/page';
+
+export interface UserSettings {
   email: string;
   ner: string;
   utas: string;
@@ -50,22 +56,15 @@ const HSKSettingsPage: React.FC = () => {
   const loadUserSettings = async () => {
     try {
       const loggedInUser = localStorage.getItem('user');
-      
       if (!loggedInUser) {
         window.location.href = '/login';
         return;
       }
-
       const { email } = JSON.parse(loggedInUser);
-      
       const response = await fetch('/api/users');
       const users = await response.json();
-      
       const user = users.find((u: any) => u.email.toLowerCase() === email.toLowerCase());
-      
-      if (!user) {
-        throw new Error('User not found');
-      }
+      if (!user) throw new Error('User not found');
 
       const settings: UserSettings = {
         email: user.email,
@@ -109,31 +108,18 @@ const HSKSettingsPage: React.FC = () => {
 
     try {
       const settingsToSave = { ...currentUser, ...formData };
-      
-      // Save to backend API
       const response = await fetch('/api/users/update', {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: currentUser.email,
-          settings: settingsToSave
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: currentUser.email, settings: settingsToSave })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to save settings');
-      }
+      if (!response.ok) throw new Error('Failed to save settings');
 
-      // Update local state
       setCurrentUser(settingsToSave);
-      
-      // Also save to localStorage as backup
       localStorage.setItem(`settings_${currentUser.email}`, JSON.stringify(settingsToSave));
-      
+
       setSaveMessage({ type: 'success', text: 'Тохиргоо амжилттай хадгалагдлаа!' });
-      
       setTimeout(() => setSaveMessage(null), 3000);
     } catch (err) {
       console.error('Error saving settings:', err);
@@ -176,355 +162,15 @@ const HSKSettingsPage: React.FC = () => {
 
     switch (activeSection) {
       case 'profile':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Хувийн мэдээлэл</h2>
-            
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-4xl">
-                {currentFormData.avatar}
-              </div>
-              <div className="text-sm text-gray-600">
-                <p>Аватар өөрчлөх боломж удахгүй нэмэгдэнэ</p>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Нэр</label>
-                <input
-                  type="text"
-                  value={currentFormData.ner || ''}
-                  onChange={(e) => handleInputChange('ner', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Имэйл хаяг</label>
-                <input
-                  type="email"
-                  value={currentFormData.email || ''}
-                  disabled
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
-                />
-                <p className="text-xs text-gray-500 mt-1">И-мэйл хаяг өөрчлөх боломжгүй</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Утасны дугаар</label>
-                <input
-                  type="tel"
-                  value={currentFormData.utas || ''}
-                  onChange={(e) => handleInputChange('utas', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Нас</label>
-                <input
-                  type="number"
-                  value={currentFormData.nas || 0}
-                  onChange={(e) => handleInputChange('nas', parseInt(e.target.value))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Био</label>
-                <textarea
-                  rows={3}
-                  value={currentFormData.bio || ''}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <button 
-                onClick={saveSettings}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                {isSaving ? 'Хадгалж байна...' : 'Хадгалах'}
-              </button>
-            </div>
-          </div>
-        );
-
+        return <ProfileSettings currentFormData={currentFormData} handleInputChange={handleInputChange} saveSettings={saveSettings} isSaving={isSaving} />;
       case 'notifications':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Мэдэгдлийн тохиргоо</h2>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Имэйл мэдэгдэл</h3>
-                  <p className="text-sm text-gray-600">Хичээл, сорил, шинэчлэлтийн мэдэгдэл</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('emailNotifications')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.emailNotifications ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-                      currentFormData.emailNotifications ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Push мэдэгдэл</h3>
-                  <p className="text-sm text-gray-600">Гар утсанд мэдэгдэл авах</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('pushNotifications')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.pushNotifications ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-                      currentFormData.pushNotifications ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="space-y-2 p-4 border border-gray-200 rounded-lg">
-                <h3 className="font-semibold text-gray-800 mb-3">Мэдэгдлийн төрөл</h3>
-                {[
-                  { key: 'lessonReminders', label: 'Хичээлийн сануулга' },
-                  { key: 'newContent', label: 'Шинэ контент' },
-                  { key: 'progressReport', label: 'Явцын тайлан' },
-                  { key: 'scoreUpdates', label: 'Онооны мэдээлэл' }
-                ].map(item => (
-                  <label key={item.key} className="flex items-center gap-2 cursor-pointer">
-                    <input 
-                      type="checkbox" 
-                      checked={currentFormData.notificationTypes?.[item.key as keyof UserSettings['notificationTypes']] ?? true}
-                      onChange={() => handleNotificationTypeToggle(item.key as keyof UserSettings['notificationTypes'])}
-                      className="w-4 h-4 text-blue-600" 
-                    />
-                    <span className="text-gray-700">{item.label}</span>
-                  </label>
-                ))}
-              </div>
-
-              <button 
-                onClick={saveSettings}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                {isSaving ? 'Хадгалж байна...' : 'Хадгалах'}
-              </button>
-            </div>
-          </div>
-        );
-
+        return <NotificationSettings currentFormData={currentFormData} handleToggle={handleToggle} handleNotificationTypeToggle={handleNotificationTypeToggle} saveSettings={saveSettings} isSaving={isSaving} />;
       case 'language':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Хэл ба бүс нутгийн тохиргоо</h2>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Интерфэйсийн хэл</label>
-                <select
-                  value={currentFormData.language || 'mn'}
-                  onChange={(e) => handleInputChange('language', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="mn">Монгол</option>
-                  <option value="en">English</option>
-                  <option value="zh">中文</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Цагийн бүс</label>
-                <select 
-                  value={currentFormData.timezone || 'UTC+8'}
-                  onChange={(e) => handleInputChange('timezone', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="UTC+8">UTC+8 (Улаанбаатар)</option>
-                  <option value="UTC+8-Beijing">UTC+8 (Beijing)</option>
-                  <option value="UTC+0">UTC+0 (London)</option>
-                </select>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Харанхуй горим</h3>
-                  <p className="text-sm text-gray-600">Харанхуй өнгөний загвар ашиглах</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('darkMode')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.darkMode ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform flex items-center justify-center ${
-                      currentFormData.darkMode ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  >
-                    {currentFormData.darkMode ? <Moon className="w-3 h-3 text-blue-600" /> : <Sun className="w-3 h-3 text-gray-400" />}
-                  </div>
-                </button>
-              </div>
-
-              <button 
-                onClick={saveSettings}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                {isSaving ? 'Хадгалж байна...' : 'Хадгалах'}
-              </button>
-            </div>
-          </div>
-        );
-
+        return <LanguageSettings currentFormData={currentFormData} handleInputChange={handleInputChange} handleToggle={handleToggle} saveSettings={saveSettings} isSaving={isSaving} />;
       case 'security':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Нууцлал ба аюулгүй байдал</h2>
-            
-            <div className="space-y-4">
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold text-gray-800 mb-2">Нууц үг солих</h3>
-                <p className="text-sm text-gray-600 mb-3">Нууц үг солих боломж удахгүй нэмэгдэнэ</p>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Хоёр шаттай баталгаажуулалт</h3>
-                  <p className="text-sm text-gray-600">Нэмэлт аюулгүй байдлын давхарга</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('twoFactor')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.twoFactor ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-                      currentFormData.twoFactor ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <button 
-                onClick={saveSettings}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                {isSaving ? 'Хадгалж байна...' : 'Хадгалах'}
-              </button>
-            </div>
-          </div>
-        );
-
+        return <SecuritySettings currentFormData={currentFormData} handleToggle={handleToggle} saveSettings={saveSettings} isSaving={isSaving} />;
       case 'learning':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-gray-800">Суралцах тохиргоо</h2>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Дууны эффект</h3>
-                  <p className="text-sm text-gray-600">Хичээл явцад дууны эффект</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('soundEffects')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.soundEffects ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-                      currentFormData.soundEffects ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                <div>
-                  <h3 className="font-semibold text-gray-800">Автомат тоглуулах</h3>
-                  <p className="text-sm text-gray-600">Видео автоматаар тоглуулах</p>
-                </div>
-                <button
-                  onClick={() => handleToggle('autoplay')}
-                  className={`w-12 h-6 rounded-full transition-colors ${
-                    currentFormData.autoplay ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${
-                      currentFormData.autoplay ? 'translate-x-6' : 'translate-x-1'
-                    }`}
-                  />
-                </button>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Өдөрт суралцах зорилго</label>
-                <select 
-                  value={currentFormData.studyGoal || '30'}
-                  onChange={(e) => handleInputChange('studyGoal', e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="15">15 минут</option>
-                  <option value="30">30 минут</option>
-                  <option value="60">1 цаг</option>
-                  <option value="120">2 цаг</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Хүндрэлийн түвшин</label>
-                <div className="flex gap-2">
-                  {['Амархан', 'Дунд', 'Хүнд'].map(level => (
-                    <button
-                      key={level}
-                      onClick={() => handleInputChange('difficulty', level)}
-                      className={`flex-1 py-2 border-2 rounded-lg transition-colors ${
-                        currentFormData.difficulty === level 
-                          ? 'border-blue-600 bg-blue-50 text-blue-600' 
-                          : 'border-gray-300 hover:border-blue-600 hover:text-blue-600'
-                      }`}
-                    >
-                      {level}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <button 
-                onClick={saveSettings}
-                disabled={isSaving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-              >
-                <Save className="w-4 h-4" />
-                {isSaving ? 'Хадгалж байна...' : 'Хадгалах'}
-              </button>
-            </div>
-          </div>
-        );
-
+        return <LearningSettings currentFormData={currentFormData} handleInputChange={handleInputChange} handleToggle={handleToggle} saveSettings={saveSettings} isSaving={isSaving} />;
       default:
         return null;
     }
@@ -548,14 +194,8 @@ const HSKSettingsPage: React.FC = () => {
         </div>
 
         {saveMessage && (
-          <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${
-            saveMessage.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
-          }`}>
-            {saveMessage.type === 'success' ? (
-              <CheckCircle className="w-5 h-5" />
-            ) : (
-              <AlertCircle className="w-5 h-5" />
-            )}
+          <div className={`mb-6 p-4 rounded-lg flex items-center gap-3 ${saveMessage.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+            {saveMessage.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
             <span>{saveMessage.text}</span>
           </div>
         )}
@@ -567,22 +207,14 @@ const HSKSettingsPage: React.FC = () => {
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${
-                    activeSection === section.id
-                      ? 'bg-blue-600 text-white'
-                      : 'hover:bg-gray-50 text-gray-700'
-                  }`}
+                  className={`w-full flex items-center gap-3 p-4 text-left transition-colors ${activeSection === section.id ? 'bg-blue-600 text-white' : 'hover:bg-gray-50 text-gray-700'}`}
                 >
                   <section.icon className="w-5 h-5" />
                   <span className="font-medium text-sm">{section.title}</span>
                 </button>
               ))}
-              
               <button 
-                onClick={() => {
-                  localStorage.removeItem('user');
-                  window.location.href = '/login';
-                }}
+                onClick={() => { localStorage.removeItem('user'); window.location.href = '/login'; }}
                 className="w-full flex items-center gap-3 p-4 text-left text-red-600 hover:bg-red-50 transition-colors border-t"
               >
                 <LogOut className="w-5 h-5" />

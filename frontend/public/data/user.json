@@ -51,7 +51,7 @@
     }
   },
   {
-    "ner": "btadsfgaf",
+    "ner": "bt111111111",
     "email": "bt@gmail.com",
     "utas": "99999999",
     "nas": 55,
@@ -68,7 +68,7 @@
     "language": "mn",
     "timezone": "UTC+8",
     "twoFactor": false,
-    "studyGoal": "120",
+    "studyGoal": "60",
     "difficulty": "Дунд",
     "notificationTypes": {
       "lessonReminders": true,
