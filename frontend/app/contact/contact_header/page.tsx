@@ -8,12 +8,12 @@ export default function ContactHeaderPage() {
   const { contactPage } = data;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50">
+    <div className="bg-gradient-to-br from-blue-50 via-white to-red-50">
       {/* Main Header */}
       <Header />
 
       {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-4 py-20 text-center">
+      <section className="max-w-6xl mx-auto px-4 py-12 text-center">
         <h1 className="text-5xl font-extrabold text-gray-900 mb-6">
           {contactPage.hero.title}
         </h1>
