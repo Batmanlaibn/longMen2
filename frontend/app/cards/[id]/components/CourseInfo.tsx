@@ -1,6 +1,14 @@
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+
+
+interface Teacher {
+  id: number;
+  name: string;
+  hskLevels: string[];
+}
+
 interface Course {
   title: string;
   rating: number;
@@ -10,18 +18,30 @@ interface Course {
   duration: string;
   level: string;
   longDescription: string;
+  shortTitle: string; // "HSK 1" гэх мэт
 }
 
 interface Props {
   course: Course;
+  teachers: Teacher[]; // 👈 тусад нь
 }
 
-export default function CourseInfo({ course }: Props) {
+export default function CourseInfo({ course, teachers }: Props) {
   const router = useRouter();
+
+  // тухайн course-д таарах багш нар
+  const courseTeachers = teachers.filter((t) =>
+    t.hskLevels.includes(course.shortTitle)
+  );
 
   return (
     <div className="bg-white rounded-xl shadow p-6">
-      <button onClick={() => router.back()} className="mb-4 text-sm bg-gray-200 px-3 py-1 rounded">← Back</button>
+      <button
+        onClick={() => router.back()}
+        className="mb-4 text-sm bg-gray-200 px-3 py-1 rounded"
+      >
+        ← Back
+      </button>
 
       <h1 className="text-2xl font-semibold mb-2">{course.title}</h1>
 
@@ -37,7 +57,23 @@ export default function CourseInfo({ course }: Props) {
         <li>📚 Lessons: {course.lessons}</li>
         <li>⏱ Duration: {course.duration}</li>
         <li>🎯 Level: {course.level}</li>
-        <li>{course.longDescription}</li>
+
+        <li>
+          👨‍🏫 Teachers:
+          {courseTeachers.length > 0 ? (
+            <ul className="ml-6 list-disc mt-1">
+              {courseTeachers.map((teacher) => (
+                <li key={teacher.id}>{teacher.name}</li>
+              ))}
+            </ul>
+          ) : (
+            <span className="ml-2 text-gray-400">
+              Багш оноогоогүй
+            </span>
+          )}
+        </li>
+
+        <li className="pt-2 text-gray-600">{course.longDescription}</li>
       </ul>
 
       <button className="w-full bg-yellow-400 hover:bg-yellow-500 py-3 rounded-lg font-medium">
@@ -46,3 +82,4 @@ export default function CourseInfo({ course }: Props) {
     </div>
   );
 }
+
