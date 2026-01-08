@@ -118,6 +118,8 @@ export default function CardDetailPage() {
           {course.chapters && (
             <ChapterList
               chapters={course.chapters}
+              currentCourse={course}
+              userId="bat"
               onChapterClick={handleChapterClick}
             />
           )}
@@ -129,6 +131,7 @@ export default function CardDetailPage() {
             />
           )}
         </div>
+
 
         {/* RIGHT */}
         <CourseInfo

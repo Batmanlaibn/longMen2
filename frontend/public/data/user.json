@@ -19,6 +19,32 @@
     "twoFactor": false,
     "studyGoal": "120",
     "difficulty": "Дунд",
+    "viewHistory": [
+      {
+        "id": 1,
+        "courseId": 1,
+        "title": "Introduction to HSK 1",
+        "description": "150 essential Chinese characters",
+        "level": "HSK 1",
+        "icon": "📚",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-08T10:30:00.000Z",
+        "type": "chapter",
+        "viewCount": 3
+      },
+      {
+        "id": 2,
+        "courseId": 1,
+        "title": "Basic Characters",
+        "description": "150 essential Chinese characters",
+        "level": "HSK 1",
+        "icon": "📚",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-08T09:15:00.000Z",
+        "type": "chapter",
+        "viewCount": 1
+      }
+    ],
     "notificationTypes": {
       "lessonReminders": true,
       "newContent": true,
@@ -70,6 +96,32 @@
     "twoFactor": false,
     "studyGoal": "60",
     "difficulty": "Дунд",
+    "viewHistory": [
+      {
+        "id": 2,
+        "courseId": 1,
+        "title": "Basic Characters",
+        "description": "150 essential Chinese characters",
+        "level": "HSK 1",
+        "icon": "📚",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-07T14:20:00.000Z",
+        "type": "chapter",
+        "viewCount": 2
+      },
+      {
+        "id": 1,
+        "courseId": 2,
+        "title": "Grammar Basics",
+        "description": "Core grammar patterns and structures",
+        "level": "HSK 2",
+        "icon": "✏️",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-06T11:45:00.000Z",
+        "type": "chapter",
+        "viewCount": 1
+      }
+    ],
     "notificationTypes": {
       "lessonReminders": true,
       "newContent": true,
@@ -147,6 +199,44 @@
     "twoFactor": false,
     "studyGoal": "120",
     "difficulty": "Дунд",
+    "viewHistory": [
+      {
+        "id": 1,
+        "courseId": 1,
+        "title": "Introduction to HSK 1",
+        "description": "150 essential Chinese characters",
+        "level": "HSK 1",
+        "icon": "📚",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-08T08:00:00.000Z",
+        "type": "chapter",
+        "viewCount": 5
+      },
+      {
+        "id": 3,
+        "courseId": 1,
+        "title": "Simple Words",
+        "description": "150 essential Chinese characters",
+        "level": "HSK 1",
+        "icon": "📚",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-07T16:30:00.000Z",
+        "type": "chapter",
+        "viewCount": 2
+      },
+      {
+        "id": 1,
+        "courseId": 3,
+        "title": "Reading Short Stories",
+        "description": "Intermediate reading comprehension",
+        "level": "HSK 3",
+        "icon": "📖",
+        "duration": "5 мин",
+        "viewedAt": "2026-01-05T13:20:00.000Z",
+        "type": "chapter",
+        "viewCount": 1
+      }
+    ],
     "notificationTypes": {
       "lessonReminders": true,
       "newContent": true,

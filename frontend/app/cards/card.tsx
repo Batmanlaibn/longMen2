@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { BookOpen, Star, ShoppingCart, Heart } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";    
 
 /* ================= TYPES ================= */
 
