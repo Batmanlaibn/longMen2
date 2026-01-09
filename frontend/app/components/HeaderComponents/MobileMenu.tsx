@@ -1,4 +1,4 @@
-import Link from "next/link";  // <-- Энийг нэмнэ
+import Link from "next/link";
 import NavLinks from "./NavLinks";
 import ProfileMenu from "./ProfileMenu";
 
@@ -15,13 +15,13 @@ export default function MobileMenu({ open, setOpen, menuItems, isLoggedIn, userE
   return (
     <>
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 z-50 ${
+        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg transform transition-transform duration-300 z-50 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="p-6 flex justify-between items-center border-b">
+        <div className="p-6 flex justify-between items-center border-b dark:border-gray-700">
           <span className="text-xl font-bold text-red-600">Цэс</span>
-          <button className="text-2xl" onClick={() => setOpen(false)}>
+          <button className="text-2xl text-gray-700 dark:text-gray-300" onClick={() => setOpen(false)}>
             ✕
           </button>
         </div>
