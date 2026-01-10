@@ -1,89 +1,81 @@
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { addTrendingView } from "@/lib/trendingStore";
+
 
 const filePath = path.join(process.cwd(), "public", "data", "user.json");
 
+/* ================= POST ================= */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { userId = "bat", item, action } = body;
-
-    console.log("📝 History API POST:", { userId, action, item });
+    const { userId = "bat", item, action } = await req.json();
 
     const fileData = await fs.readFile(filePath, "utf8");
     const users = JSON.parse(fileData);
 
-    const userIndex = users.findIndex((u: any) => u.ner === userId);
-    if (userIndex === -1) {
-      console.error("❌ User not found:", userId);
+    const user = users.find((u: any) => u.ner === userId);
+    if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    if (!users[userIndex].viewHistory) {
-      users[userIndex].viewHistory = [];
-    }
+    if (!user.viewHistory) user.viewHistory = [];
 
-    /* ========== ACTIONS ========== */
-
-    // ➕ Chapter view нэмэх
+    /* ➕ ADD VIEW */
     if (action === "add_view" && item) {
-      const existsIndex = users[userIndex].viewHistory.findIndex(
-        (h: any) => h.id === item.id && h.courseId === item.courseId
+      const existing = user.viewHistory.find(
+        (h: any) =>
+          h.id === item.id &&
+          h.courseId === item.courseId &&
+          h.type === "chapter"
       );
 
-      if (existsIndex !== -1) {
-        users[userIndex].viewHistory[existsIndex] = {
-          ...users[userIndex].viewHistory[existsIndex],
-          viewedAt: item.viewedAt,
-          viewCount: (users[userIndex].viewHistory[existsIndex].viewCount || 1) + 1,
-        };
-        console.log("✅ Updated existing history item");
+      if (existing) {
+        existing.viewCount = (existing.viewCount || 1) + 1;
+        existing.viewedAt = item.viewedAt;
       } else {
-        users[userIndex].viewHistory.unshift({
+        user.viewHistory.unshift({
           ...item,
+          type: "chapter",
           viewCount: 1,
         });
-        console.log("✅ Added new history item");
       }
 
-      users[userIndex].viewHistory = users[userIndex].viewHistory.slice(0, 50);
+      // max 50 history
+      user.viewHistory = user.viewHistory.slice(0, 50);
+      
+      // REAL-TIME TREND UPDATE
+      addTrendingView(item);
     }
 
-    // 🗑 Нэг устгах
+    /* 🗑 REMOVE ONE */
     if (action === "remove" && item?.id) {
-      users[userIndex].viewHistory = users[userIndex].viewHistory.filter(
+      user.viewHistory = user.viewHistory.filter(
         (h: any) => !(h.id === item.id && h.courseId === item.courseId)
       );
-      console.log("✅ Removed history item");
     }
 
-    // 🧹 Бүгдийг цэвэрлэх
+    /* 🧹 CLEAR */
     if (action === "clear") {
-      users[userIndex].viewHistory = [];
-      console.log("✅ Cleared all history");
+      user.viewHistory = [];
     }
 
     await fs.writeFile(filePath, JSON.stringify(users, null, 2));
-    console.log("✅ Saved to user.json");
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("❌ History API error:", error);
-    return NextResponse.json({ error: "Failed to save history" }, { status: 500 });
+  } catch (err) {
+    console.error("❌ POST history error:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
-// GET: Нийт үзэлтийн тоо авах
+/* ================= GET ================= */
+/* 📊 Chapter статистик */
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
-    const chapterId = searchParams.get("chapterId");
-    const courseId = searchParams.get("courseId");
-
-    if (!chapterId || !courseId) {
-      return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
-    }
+    const chapterId = Number(searchParams.get("chapterId"));
+    const courseId = Number(searchParams.get("courseId"));
 
     const fileData = await fs.readFile(filePath, "utf8");
     const users = JSON.parse(fileData);
@@ -91,29 +83,27 @@ export async function GET(req: Request) {
     let totalViews = 0;
     let uniqueViewers = 0;
 
-    users.forEach((user: any) => {
-      if (user.viewHistory) {
-        const found = user.viewHistory.find(
-          (h: any) => h.id === parseInt(chapterId) && h.courseId === parseInt(courseId)
-        );
-        if (found) {
-          totalViews += found.viewCount || 1;
-          uniqueViewers += 1;
-        }
+    users.forEach((u: any) => {
+      const found = u.viewHistory?.find(
+        (h: any) =>
+          h.id === chapterId &&
+          h.courseId === courseId &&
+          h.type === "chapter"
+      );
+
+      if (found) {
+        uniqueViewers++;
+        totalViews += found.viewCount || 1;
       }
     });
 
-    const result = {
+    return NextResponse.json({
       totalViews,
       uniqueViewers,
-      totalUsers: users.length
-    };
-
-    console.log("📊 Stats for chapter", chapterId, ":", result);
-
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error("❌ Get views error:", error);
-    return NextResponse.json({ error: "Failed to get views" }, { status: 500 });
+      totalUsers: users.length,
+    });
+  } catch (err) {
+    console.error("❌ GET history error:", err);
+    return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }
